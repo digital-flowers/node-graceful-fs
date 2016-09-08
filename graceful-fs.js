@@ -127,11 +127,11 @@ function patch (fs) {
 
   var fs$readdir = fs.readdir
   fs.readdir = readdir
-  function readdir (path, cb) {
-    return go$readdir(path, cb)
+  function readdir (path, encoding, cb) {
+    return arguments.length === 2 ? readdir(path, "UTF8", cb) : go$readdir(path, encoding, cb)
 
     function go$readdir () {
-      return fs$readdir(path, function (err, files) {
+      return fs$readdir(path, encoding, function (err, files) {
         if (files && files.sort)
           files.sort();  // Backwards compatibility with graceful-fs.
 
